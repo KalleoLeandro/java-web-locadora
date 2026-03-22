@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Lista de Locações</title>
+
+		<h:form id="listLocacoes">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<p:tabView>
+				<p:tab id="ltlocacao" title="Locações Efetuadas">
+					<h:panelGrid columns="1">
+					<p:dataTable id="tabelaLocacoes"
+								value="#{devolucaoBacking.listaJogos}" var="locacoes"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+															  {PreviousPageLink} {PageLinks}
+															  {NextPageLink} {LastPageLink}
+															  Registros por pagina: {RowsPerPageDropdown}
+															  {Exporters}"
+								paginator="true" rows="10" lazy="true"
+								rowsPerPageTemplate="10,25,50"
+								rowKey="#{locacoes.idJogo}" disabledSelection="true"
+								emptyMessage="Nenhum registro encontrado!">
+
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Código" />
+									</f:facet>
+									<h:outputText value="#{locacoes.idJogo}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nome do Jogo" />
+									</f:facet>
+									<h:outputText value="#{locacoes.nome}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Faixa Etária" />
+									</f:facet>
+									<h:outputText value="#{locacoes.faixaEtaria}" />
+								</p:column>		
+								
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Gênero" />
+									</f:facet>
+									<h:outputText value="#{locacoes.genero}" />
+								</p:column>
+
+							</p:dataTable>							
+						</h:panelGrid>							
+				<h:panelGrid columns="2">
+					<p:commandButton id="btn-voltar" value="Voltar"
+						action="#{devolucaoBacking.voltar}" update="@form">
+					</p:commandButton>
+				</h:panelGrid>
+					
+				</p:tab>
+			</p:tabView>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

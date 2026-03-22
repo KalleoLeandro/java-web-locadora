@@ -1,0 +1,20 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" role="img" aria-label="Sete Circuitos GBC-47">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7b2cbf"/>
+      <stop offset="100%" stop-color="#c77dff"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="840" rx="36" fill="url(#bg)"/>
+  <circle cx="500" cy="120" r="110" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="90" cy="740" r="150" fill="rgba(0,0,0,0.12)"/>
+  <text x="36" y="64" font-size="18" letter-spacing="4" fill="#fbf4ff" opacity="0.9">AMBIENTE DE TESTE</text>
+  <text x="36" y="120" font-size="28" font-weight="700" fill="#fbf4ff">Sete Circuitos</text>
+  <text x="36" y="154" font-size="28" font-weight="700" fill="#fbf4ff">GBC-47</text>
+
+  <text x="36" y="650" font-size="22" fill="#fbf4ff" opacity="0.95">PLATAFORMA</text>
+  <text x="36" y="682" font-size="30" font-weight="700" fill="#fbf4ff">Game Boy Color</text>
+  <text x="36" y="728" font-size="22" fill="#fbf4ff" opacity="0.95">GENERO</text>
+  <text x="36" y="760" font-size="28" font-weight="700" fill="#fbf4ff">MMORPG</text>
+  <text x="470" y="760" text-anchor="end" font-size="42" font-weight="700" fill="#fbf4ff">2002</text>
+</svg>

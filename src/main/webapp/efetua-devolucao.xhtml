@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Efetua Devolução</title>
+
+		<h:form id="formEfetuaDevolucao">
+
+			<p:growl id="growl" showDetail="true" life="4000" />
+
+			<p:tabView>
+
+				<p:tab id="efetuaDevolucao" title="Efetua Devolução">
+
+					<p:panel id="pnDevolucao" style="width:600px;">
+
+						<p:panelGrid columns="3" style="width:477px">
+
+							<p:outputLabel value="Cpf do Cliente:"/>
+							<p:selectOneMenu value="#{devolucaoBacking.locacao}" filter="true">
+								<f:selectItem itemValue="" itemLabel=" -Selecione Locação- " />
+								<f:selectItems value="#{devolucaoBacking.listaLocacao}" var="locacao"
+									itemLabel="CPF: #{locacao.clienteIdCliente.cpf} - Locação: #{locacao.idLocacao}" itemValue="#{locacao.idLocacao}"/>
+							</p:selectOneMenu>
+							<p:commandButton id="btnPesquisarLocacao" value="Pesquisar"
+								action="#{devolucaoBacking.carregarComponentes}"
+								update="@form" style="width:77px;font-size: 12px;" />
+						</p:panelGrid>						
+						<p:panelGrid columns="2" style="width:474px">
+
+							<p:outputLabel value="Nome do Cliente:" />
+							<p:inputText value="#{devolucaoBacking.nomeCliente}" disabled="true" />
+							<p:outputLabel value="Data de Locação:" />
+							<p:calendar id="button1" value="#{devolucaoBacking.dataLocacao}" pattern="dd/MM/yyyy"
+								disabled="true" size="37" />
+							<p:outputLabel value="Data de Devolução:" />
+							<p:calendar id="button2" value="#{devolucaoBacking.dataDevolucao}" pattern="dd/MM/yyyy"
+								disabled="true" size="37" />
+						</p:panelGrid>
+
+						<p:panelGrid columns="1" style="text-align:center;">
+							<p:outputLabel value="Jogos Locados"  />
+							<p:dataTable id="tabelaDevolucao" value="#{devolucaoBacking.listaJogos}" var="jogosDevolucao"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+															  {PreviousPageLink} {PageLinks}
+															  {NextPageLink} {LastPageLink}
+															  Registros por pagina: {RowsPerPageDropdown}"
+								paginator="true" rows="10" lazy="true"
+								rowsPerPageTemplate="10,25,50"
+								emptyMessage="Nenhum registro encontrado!"
+								disabledSelection="true">
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Código" />
+									</f:facet>
+									<h:outputText value="#{jogosDevolucao.idJogo}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nome" />
+									</f:facet>
+									<h:outputText value="#{jogosDevolucao.nome}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</p:panelGrid>
+						<p:panelGrid columns="3">
+							<p:commandButton id="btnSalvar" value="Salvar" action="#{devolucaoBacking.salvar}"
+								update="@form" style="width:135px;" />
+							<p:commandButton id="btnCancelar" value="Cancelar" action="#{devolucaoBacking.cancelar}"
+								update="@form" style="width:134px;" />
+							<p:commandButton id="btnSair" value="Sair" action="#{devolucaoBacking.sair}"
+								update="@form" style="width:135px;" />
+						</p:panelGrid>
+
+					</p:panel>
+
+					<p:blockUI block="pnDevolucao" trigger="btnSalvar" />
+
+				</p:tab>
+
+			</p:tabView>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

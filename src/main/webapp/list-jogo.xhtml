@@ -1,0 +1,143 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Consulta de Jogos</title>
+		<h:form id="listJogo">
+			<p:growl id="growl" showDetail="true" life="4000" />
+			<p:tabView>
+				<p:tab id="ltJogo" title="Jogos Cadastrados">
+					<p:panel id="pnJogos">
+						<h:panelGrid columns="6" cellpadding="5">
+							<p:outputLabel value="Nome:" />
+							<p:inputText value="#{jogoBacking.nomePesquisar}" size="80" />
+							<p:outputLabel value="Plataforma:" />
+							<p:selectOneMenu value="#{jogoBacking.plataformaPesquisar}" style="min-width:180px">
+								<f:selectItem itemLabel="Todas" itemValue="" />
+								<f:selectItems value="#{jogoBacking.listaPlataformas}" />
+							</p:selectOneMenu>
+							<p:outputLabel value="Genero:" />
+							<p:selectOneMenu value="#{jogoBacking.generoPesquisar}" style="min-width:180px">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{jogoBacking.listaGeneros}" />
+							</p:selectOneMenu>
+							<p:outputLabel value="Disponivel:" />
+							<p:selectOneMenu value="#{jogoBacking.disponivelPesquisar}" style="min-width:140px">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{jogoBacking.listaDisponibilidade}" />
+							</p:selectOneMenu>
+							<p:outputLabel value="Promocao:" />
+							<p:selectOneMenu value="#{jogoBacking.promocaoPesquisar}" style="min-width:140px">
+								<f:selectItem itemLabel="Todas" itemValue="" />
+								<f:selectItems value="#{jogoBacking.listaPromocoes}" />
+							</p:selectOneMenu>
+							<h:panelGroup />
+							<h:panelGroup>
+								<p:commandButton id="btnPesquisar" value="Pesquisar" action="#{jogoBacking.pesquisar}" update="@form" />
+								<p:commandButton id="btnLimpar" value="Limpar" action="#{jogoBacking.limparFiltros}" update="@form" style="margin-left:8px" />
+							</h:panelGroup>
+						</h:panelGrid>
+
+						<p:separator />
+
+						<p:dataTable id="tabelaJogos" value="#{jogoBacking.listaJogos}" var="jogo"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} Registros por pagina: {RowsPerPageDropdown} {Exporters}"
+							paginator="true" rows="10" lazy="true" rowsPerPageTemplate="10,25,50" emptyMessage="Nenhum registro encontrado!"
+							rowKey="#{jogo.idJogo}" selectionMode="single" selection="#{jogoBacking.jogoSelecionado}">
+
+							<f:facet name="{Exporters}">
+								<div style="float: right; padding-top: 5px;">
+									<h:commandLink id="excel">
+										<p:graphicImage name="/demo/images/excel.png" />
+										<p:dataExporter type="xls" target="tabelaJogos" fileName="listaJogos" />
+									</h:commandLink>
+									<h:commandLink>
+										<p:graphicImage name="/demo/images/xlsx.png" width="24" />
+										<p:dataExporter type="xlsxstream" target="tabelaJogos" fileName="listaJogos" />
+									</h:commandLink>
+									<h:commandLink id="pdf">
+										<p:graphicImage name="/demo/images/pdf.png" />
+										<p:dataExporter type="pdf" target="tabelaJogos" fileName="listaJogos" />
+									</h:commandLink>
+									<h:commandLink id="csv">
+										<p:graphicImage name="/demo/images/csv.png" />
+										<p:dataExporter type="csv" target="tabelaJogos" fileName="listaJogos" />
+									</h:commandLink>
+									<h:commandLink id="xml">
+										<p:graphicImage name="/demo/images/xml.png" />
+										<p:dataExporter type="xml" target="tabelaJogos" fileName="listaJogos" />
+									</h:commandLink>
+								</div>
+							</f:facet>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Codigo" />
+								</f:facet>
+								<h:outputText value="#{jogo.idJogo}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Imagem" />
+								</f:facet>
+								<p:graphicImage value="#{jogo.imagemExibicao}" width="80" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{jogo.nome}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Valor" />
+								</f:facet>
+								<h:outputText value="#{jogo.valorFormatado}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Disponivel" />
+								</f:facet>
+								<h:outputText value="#{jogo.disponivel}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Genero" />
+								</f:facet>
+								<h:outputText value="#{jogo.genero}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Plataforma" />
+								</f:facet>
+								<h:outputText value="#{jogo.plataforma}" />
+							</p:column>
+						</p:dataTable>
+
+						<p:contextMenu for="tabelaJogos">
+							<p:menuitem value="Alterar" action="#{jogoBacking.redirecionar('alterar')}" rendered="#{!loginBacking.user}" update="@form" />
+							<p:menuitem value="Detalhar" action="#{jogoBacking.redirecionar('detalhar')}" update="@form" />
+							<p:menuitem value="Excluir" action="#{jogoBacking.excluir}" rendered="#{loginBacking.dev}" update="@form">
+								<p:confirm header="Excluir Jogo" message="Confirma exclusao?" />
+							</p:menuitem>
+						</p:contextMenu>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+							<p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" />
+						</p:confirmDialog>
+					</p:panel>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

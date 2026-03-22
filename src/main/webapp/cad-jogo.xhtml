@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="corpo">
+		<title>Cadastro de Jogo</title>
+		<h:form id="formCadJogo">
+			<p:growl id="growl" showDetail="true" life="4000" />
+			<p:tabView>
+				<p:tab id="cadJogo" title="Cadastro de Jogo">
+					<p:panel id="pnJogo">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Nome:" />
+							<p:inputText value="#{jogoBacking.nome}" size="45" maxlength="80" placeholder="Ex.: The Last of Us Part I" />
+
+							<p:outputLabel value="Valor:" />
+							<p:inputNumber value="#{jogoBacking.valor}" size="45" maxlength="45" placeholder="Ex.: 20,00" symbol="R$" symbolPosition="p" />
+
+							<p:outputLabel value="Disponivel:" />
+							<p:selectOneRadio id="disponivel" value="#{jogoBacking.disponivel}">
+								<f:selectItem itemLabel="Sim" itemValue="Sim" />
+								<f:selectItem itemLabel="Nao" itemValue="Nao" />
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Promocao:" />
+							<p:selectOneRadio id="promocao" value="#{jogoBacking.promocao}">
+								<f:selectItem itemLabel="Sim" itemValue="Sim" />
+								<f:selectItem itemLabel="Nao" itemValue="Nao" />
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Valor Promocao:" />
+							<p:inputNumber value="#{jogoBacking.valorPromocao}" placeholder="Ex.: 15,00" symbol="R$" symbolPosition="p" />
+
+							<p:outputLabel value="Plataforma:" />
+							<p:inputText value="#{jogoBacking.plataforma}" size="45" maxlength="45" placeholder="Ex.: PlayStation 5" />
+
+							<p:outputLabel value="Ano Lancamento:" />
+							<p:inputNumber value="#{jogoBacking.anoLancamento}" size="10" maxValue="2030" placeholder="Ex.: 2023" decimalPlaces="0" thousandSeparator="" />
+
+							<p:outputLabel value="Faixa Etaria:" />
+							<p:inputNumber value="#{jogoBacking.faixaEtaria}" size="10" maxValue="18" decimalPlaces="0" placeholder="Ex.: 16" />
+
+							<p:outputLabel value="Genero:" />
+							<p:selectOneMenu value="#{jogoBacking.genero}" size="50" filter="true">
+								<f:selectItem itemValue="" itemLabel="- Selecione Genero -" />
+								<f:selectItems value="#{jogoBacking.listaGeneros}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Imagem:" />
+							<p:inputText value="#{jogoBacking.imagem}" size="45" maxlength="255" placeholder="Ex.: resources/demo/images/xml.png" />
+						</p:panelGrid>
+
+						<p:panel header="Preview da Imagem">
+							<p:graphicImage value="#{jogoBacking.imagem}" width="180" rendered="#{not empty jogoBacking.imagem}" />
+						</p:panel>
+
+						<p:panelGrid columns="3">
+							<p:commandButton id="btn-salvar" value="Salvar" action="#{jogoBacking.cadastrar}" update="@form" />
+							<p:commandButton id="btn-cancelar" value="Cancelar" action="#{jogoBacking.cancelar}" update="@form" />
+							<p:commandButton id="btn-sair" value="Sair" action="#{jogoBacking.sair}" update="@form" />
+						</p:panelGrid>
+					</p:panel>
+					<p:blockUI block="pnJogo" trigger="btn-salvar" />
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
